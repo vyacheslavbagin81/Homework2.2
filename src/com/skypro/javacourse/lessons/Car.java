@@ -1,4 +1,5 @@
 package com.skypro.javacourse.lessons;
+
 public class Car {
     private final String brand;
     private final String model;
@@ -11,6 +12,31 @@ public class Car {
     private String registrationNumber;
     private final int numberOfSeats;
     private boolean tires;
+    private String startingTheEngine;
+    private String keylessAccess;
+
+    public class Key {
+        private final boolean startingTheEngine;
+        private final boolean keylessAccess;
+
+        public String getStartingTheEngine() {
+            if (startingTheEngine) {
+                return "Удаленный запуск есть";
+            } else return "Удаленный запуск отсутствует";
+        }
+
+        public String getKeylessAccess() {
+            if (keylessAccess) {
+                return "Бесключевой доступ есть";
+            } else return "Бесключевой доступ отсутствует";
+        }
+
+        public Key(boolean startingTheEngine, boolean keylessAccess) {
+            this.startingTheEngine = startingTheEngine;
+            this.keylessAccess = keylessAccess;
+        }
+    }
+
 
     public String getBrand() {
         return brand;
@@ -68,8 +94,10 @@ public class Car {
         this.registrationNumber = registrationNumber;
     }
 
-    public boolean isTires() {
-        return tires;
+    public String getTires(boolean tires) {
+        if (tires) {
+            return "Зимняя";
+        } else return "Летняя";
     }
 
     public void setTires(boolean tires) {
@@ -112,19 +140,36 @@ public class Car {
             this.transmission = "Механическая";
         } else {
             this.transmission = transmission;
-        }if (bodyType == null || bodyType.isBlank()) {
+        }
+        if (bodyType == null || bodyType.isBlank()) {
             this.bodyType = "default";
         } else {
             this.bodyType = bodyType;
-        }if (registrationNumber == null || registrationNumber.isBlank()) {
+        }
+        if (registrationNumber == null || registrationNumber.isBlank()) {
             this.registrationNumber = "Х000ХХ";
         } else {
             this.registrationNumber = registrationNumber;
-        }if (numberOfSeats <= 0 || numberOfSeats > 8) {
+        }
+        if (numberOfSeats <= 0 || numberOfSeats > 8) {
             this.numberOfSeats = 5;
         } else {
             this.numberOfSeats = numberOfSeats;
         }
+    }
+
+    public void key(String startingTheEngine1, String keylessAccess1) {
+        boolean startingTheEngine;
+        if (startingTheEngine1.equalsIgnoreCase("да")) {
+            startingTheEngine = true;
+        } else startingTheEngine = false;
+        boolean keylessAccess;
+        if (keylessAccess1.equalsIgnoreCase("да")) {
+            keylessAccess = true;
+        } else keylessAccess = false;
+        Key key = new Key(startingTheEngine, keylessAccess);
+        this.startingTheEngine = key.getStartingTheEngine();
+        this.keylessAccess = key.getKeylessAccess();
     }
 
     public boolean changingTires(int mount) {
@@ -136,10 +181,7 @@ public class Car {
 
     @Override
     public String toString() {
-        String tiresSeason;
-        if (tires) {
-            tiresSeason = "Зимняя";
-        } else {tiresSeason = "Летняя";}
+
         return "Автомобиль: " +
                 "марка - " + brand + ";" +
                 " модель - " + model + ";" +
@@ -151,7 +193,8 @@ public class Car {
                 " тип кузова - " + bodyType + ";" +
                 " регистрационный номер - " + registrationNumber + ";" +
                 " колличество мест - " + numberOfSeats + ";" +
-                " резина - " + tiresSeason + "\n"+
+                " резина - " + getTires(tires) + ";\n" +
+                "            " + startingTheEngine + "; " + keylessAccess + "\n" +
                 "-------------------------------------------------------------------------------------------------------------------------\n";
-        }
+    }
 }

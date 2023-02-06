@@ -24,5 +24,8 @@ public class Main {
         System.out.println(bmw);
         System.out.println(kia);
         System.out.println(hyundai);
+
+        lada.key("да", "нет");
+        System.out.println(lada);
     }
 }
